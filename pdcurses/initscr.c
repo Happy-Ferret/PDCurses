@@ -331,9 +331,9 @@ int resize_term(int nlines, int ncols)
     return OK;
 }
 
-bool is_termresized(void)
+bool is_term_resized(void)
 {
-    PDC_LOG(("is_termresized() - called\n"));
+    PDC_LOG(("is_term_resized() - called\n"));
 
     return SP->resized;
 }
