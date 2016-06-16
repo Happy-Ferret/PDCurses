@@ -296,15 +296,13 @@ int resize_term(int nlines, int ncols)
 {
     PDC_LOG(("resize_term() - called: nlines %d\n", nlines));
 
-	if (nlines == 0) nlines = SP->resizeY;
-	if (ncols == 0) ncols = SP->resizeX;
-
+		
     if (!stdscr || PDC_resize_screen(nlines, ncols) == ERR)
         return ERR;
 
-    SP->lines = PDC_get_rows();
-    LINES = SP->lines - SP->linesrippedoff - SP->slklines;
-    SP->cols = COLS = PDC_get_columns();
+    
+    LINES = SP->lines;
+    COLS = SP->cols;
 
     if (wresize(curscr, SP->lines, SP->cols) == ERR ||
         wresize(stdscr, LINES, COLS) == ERR ||
@@ -331,7 +329,7 @@ int resize_term(int nlines, int ncols)
     return OK;
 }
 
-bool is_term_resized(void)
+bool is_term_resized(int lines, int columns)
 {
     PDC_LOG(("is_term_resized() - called\n"));
 

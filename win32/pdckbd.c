@@ -604,9 +604,7 @@ static int _process_mouse_event(void)
 int _process_window_event()
 {
 		PDC_LOG(("WINDOW EVENT!"));
-		WINDOW_BUFFER_SIZE_RECORD wRecord = save_ip.Event.WindowBufferSizeEvent;
-		SP->resizeX = wRecord.dwSize.X;
-		SP->resizeY = wRecord.dwSize.Y;
+		WINDOW_BUFFER_SIZE_RECORD wRecord = save_ip.Event.WindowBufferSizeEvent;		
 		SP->resized = TRUE;
 		return KEY_RESIZE;
 		

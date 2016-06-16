@@ -509,33 +509,17 @@ static BOOL _fit_console_window(HANDLE con_out, CONST SMALL_RECT *rect)
 
 int PDC_resize_screen(int nlines, int ncols)
 {
-    SMALL_RECT rect;
-    COORD size, max;
 
-    if (nlines < 2 || ncols < 2)
-        return ERR;
-
-    max = GetLargestConsoleWindowSize(pdc_con_out);
-
-    rect.Left = rect.Top = 0;
-    rect.Right = ncols - 1;
-
-    if (rect.Right > max.X)
-        rect.Right = max.X;
-
-    rect.Bottom = nlines - 1;
-
-    if (rect.Bottom > max.Y)
-        rect.Bottom = max.Y;
-
-    size.X = rect.Right + 1;
-    size.Y = rect.Bottom + 1;
-
-    _fit_console_window(pdc_con_out, &rect);
-    SetConsoleScreenBufferSize(pdc_con_out, size);
-    _fit_console_window(pdc_con_out, &rect);
-    SetConsoleScreenBufferSize(pdc_con_out, size);
-    SetConsoleActiveScreenBuffer(pdc_con_out);
+    COORD size;
+      
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(pdc_con_out,&csbi);
+	size.Y = csbi.srWindow.Bottom - csbi.srWindow.Top;
+	size.X = csbi.srWindow.Right - csbi.srWindow.Left;
+	SetConsoleScreenBufferSize(pdc_con_out,size);
+	SetActiveWindow(pdc_con_out);
+	SP->lines = size.Y;
+	SP->cols = size.X;
 
     return OK;
 }

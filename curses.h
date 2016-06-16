@@ -311,8 +311,7 @@ typedef struct
     bool  key_code;                /* TRUE if last key is a special key;
                                       used internally by get_wch() */
 
-	int resizeX;                   /* After a resize events, this is the new available size*/
-	int resizeY;   
+	
 #ifdef XCURSES
     int   XcurscrSize;    /* size of Xcurscr shared memory block */
     bool  sb_on;
@@ -1293,7 +1292,7 @@ bool    wmouse_trafo(const WINDOW *, int *, int *, bool);
 
 int     addrawch(chtype);
 int     insrawch(chtype);
-bool    is_term_resized(void);
+bool    is_term_resized(int,int);
 int     mvaddrawch(int, int, chtype);
 int     mvdeleteln(int, int);
 int     mvinsertln(int, int);
